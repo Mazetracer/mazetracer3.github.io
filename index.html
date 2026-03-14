@@ -3,140 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XR Campus Tour | Interactive Portfolio</title>
+    <title>XR Campus Tour | Process Portfolio</title>
+    <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入 AOS 动画库 -->
+    <!-- 引入 AOS 滚动动画库 -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- 高级字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: white; overflow-x: hidden; }
-        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
-        /* 背景流光动画 */
-        .blob { position: absolute; width: 500px; height: 500px; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); filter: blur(80px); border-radius: 50%; z-index: -1; opacity: 0.2; animation: move 20s infinite alternate; }
-        @keyframes move { from { transform: translate(-10%, -10%); } to { transform: translate(20%, 20%); } }
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; }
+        
+        /* 动态背景流光 (非常淡) */
+        .bg-glow {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% -20%, #eff6ff 0%, #ffffff 50%);
+            z-index: -1;
+        }
+
+        /* 文字渐变动画 */
+        .text-gradient {
+            background: linear-gradient(to right, #2563eb, #7c3aed, #2563eb);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 5s linear infinite;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
+
+        /* 卡片悬停提升感 */
+        .hover-lift { transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+
         /* 顶部进度条 */
-        #progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: linear-gradient(to right, #3b82f6, #8b5cf6); z-index: 100; width: 0%; }
+        #progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: #2563eb; z-index: 100; width: 0%; transition: width 0.1s; }
     </style>
 </head>
-<body class="antialiased">
+<body class="text-slate-900 antialiased">
 
     <div id="progress-bar"></div>
-    <div class="blob top-0 -left-20"></div>
-    <div class="blob bottom-0 -right-20" style="animation-delay: -10s; background: #ec4899; opacity: 0.1;"></div>
+    <div class="bg-glow"></div>
 
-    <!-- 极简悬浮导航 -->
-    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-        <div class="glass-card px-6 py-3 rounded-full flex gap-8 text-sm font-medium">
-            <a href="#home" class="hover:text-blue-400 transition">Home</a>
-            <a href="#concepts" class="hover:text-blue-400 transition">Concepts</a>
-            <a href="#process" class="hover:text-blue-400 transition">Process</a>
-            <a href="#contact" class="hover:text-blue-400 transition">Contact</a>
+    <!-- 导航栏 (磨砂玻璃) -->
+    <nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-slate-100">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <span class="font-bold text-lg tracking-tight">XR Campus Tour</span>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-500">
+                <a href="#about" class="hover:text-blue-600 transition">About</a>
+                <a href="#concepts" class="hover:text-blue-600 transition">Concepts</a>
+                <a href="#process" class="hover:text-blue-600 transition">Process</a>
+                <a href="#contact" class="px-4 py-2 bg-slate-900 text-white rounded-full hover:bg-blue-600 transition">Contact</a>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-6">
-        <div data-aos="zoom-out" data-aos-duration="1500">
-            <span class="px-4 py-1 rounded-full border border-blue-500/30 text-blue-400 text-xs font-bold tracking-widest uppercase mb-6 inline-block bg-blue-500/10">Next-Gen Campus Experience</span>
-            <h1 class="text-6xl md:text-8xl font-extrabold mb-8 tracking-tighter bg-gradient-to-b from-white to-slate-500 bg-clip-text text-transparent">
-                XR Campus Tour
+    <!-- Hero Section (动态呼吸感) -->
+    <section class="pt-40 pb-20 px-6 text-center">
+        <div data-aos="fade-up" data-aos-duration="1200">
+            <h1 class="text-6xl md:text-7xl font-extrabold mb-8 tracking-tighter">
+                Exploring <span class="text-gradient">The Future</span> of Campus
             </h1>
-            <p class="max-w-2xl text-slate-400 text-lg md:text-xl mb-12 leading-relaxed">
-                Bridging reality and digital storytelling through Location-Based AR and immersive interactions.
+            <p class="max-w-2xl mx-auto text-slate-500 text-lg md:text-xl mb-12 leading-relaxed font-light">
+                A journey through extended reality and location-based storytelling. Built for an immersive student experience.
             </p>
-            <div class="flex gap-4 justify-center">
-                <a href="#concepts" class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-xl font-bold transition-all hover:scale-105 shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)]">Start Exploring</a>
-            </div>
-        </div>
-        
-        <!-- 图片/视频演示框 (Mockup) -->
-        <div class="mt-20 w-full max-w-4xl px-4" data-aos="fade-up" data-aos-delay="400">
-            <div class="glass-card rounded-3xl p-2 shadow-2xl overflow-hidden aspect-video relative">
-                <div class="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-600">
-                    <!-- 这里将来可以放你的项目视频或截图 -->
-                    <p>[ Insert Project Demo Video / Screenshot Here ]</p>
-                </div>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="#about" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-semibold hover:shadow-xl transition-all active:scale-95">View Project Portfolio</a>
             </div>
         </div>
     </section>
 
-    <!-- Bento Grid Concepts -->
-    <section id="concepts" class="py-32 max-w-6xl mx-auto px-6">
+    <!-- About & Overview (错落式入场) -->
+    <section id="about" class="py-24 max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-12">
+            <div class="bg-slate-50 p-10 rounded-[2.5rem] hover-lift" data-aos="fade-right">
+                <h2 class="text-2xl font-bold mb-6">About This Portfolio</h2>
+                <p class="text-slate-600 leading-relaxed">
+                    This website documents the full development process of the XR Campus Tour project. Instead of only presenting the final outcome, this portfolio focuses on the design process, research, and iterative development.
+                </p>
+            </div>
+            <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 hover-lift" data-aos="fade-left">
+                <h2 class="text-2xl font-bold mb-6">Project Overview</h2>
+                <p class="text-slate-600 leading-relaxed">
+                    The project aims to enhance traditional campus visits by introducing interactive digital content through AR characters that appear at specific physical locations.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Concepts (Bento Grid 布局) -->
+    <section id="concepts" class="py-24 max-w-6xl mx-auto px-6">
         <h2 class="text-4xl font-bold mb-16 text-center" data-aos="fade-up">Key Concepts</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Large Card -->
-            <div class="md:col-span-2 glass-card p-10 rounded-[2.5rem] flex flex-col justify-end min-h-[400px] relative overflow-hidden group" data-aos="fade-right">
-                <div class="absolute top-8 right-8 text-6xl opacity-20 group-hover:scale-110 transition">📍</div>
-                <h3 class="text-3xl font-bold mb-4">Location-Based Intelligence</h3>
-                <p class="text-slate-400 text-lg">Using GPS and geospatial data to trigger content precisely where the story happens. Every corner of the campus has a hidden narrative waiting to be unlocked.</p>
+            <div class="md:col-span-2 bg-blue-50 p-10 rounded-[2.5rem] hover-lift relative overflow-hidden" data-aos="zoom-in-up">
+                <div class="absolute top-6 right-6 text-5xl opacity-20">📍</div>
+                <h3 class="text-xl font-bold mb-4 text-blue-900">Location-Based Interaction</h3>
+                <p class="text-blue-800/60">Using GPS to trigger immersive digital overlays exactly where they matter most.</p>
             </div>
-            <!-- Small Card 1 -->
-            <div class="glass-card p-10 rounded-[2.5rem] flex flex-col justify-center" data-aos="fade-left">
-                <div class="text-4xl mb-6">🤖</div>
-                <h3 class="text-xl font-bold mb-2">AR Virtual Guide</h3>
-                <p class="text-slate-400 text-sm">A personalized AI guide that talks, interacts, and leads the way.</p>
+            <div class="bg-indigo-50 p-10 rounded-[2.5rem] hover-lift" data-aos="zoom-in-up" data-aos-delay="100">
+                <div class="text-3xl mb-4">🤖</div>
+                <h3 class="text-xl font-bold mb-4">AR Guide</h3>
+                <p class="text-indigo-800/60">An intelligent virtual companion for campus exploration.</p>
             </div>
-            <!-- Small Card 2 -->
-            <div class="glass-card p-10 rounded-[2.5rem] flex flex-col justify-center" data-aos="fade-up">
-                <div class="text-4xl mb-6">✨</div>
-                <h3 class="text-xl font-bold mb-2">Immersive Story</h3>
-                <p class="text-slate-400 text-sm">Deeply engaging narratives that transform a simple walk into an adventure.</p>
-            </div>
-            <!-- Medium Card -->
-            <div class="md:col-span-2 glass-card p-10 rounded-[2.5rem] bg-gradient-to-br from-blue-600/20 to-purple-600/20" data-aos="fade-up">
-                <h3 class="text-2xl font-bold mb-4">Tech Stack</h3>
-                <div class="flex flex-wrap gap-4 text-xs font-mono">
-                    <span class="px-3 py-1 bg-white/10 rounded-lg">Unity 3D</span>
-                    <span class="px-3 py-1 bg-white/10 rounded-lg">ARKit / ARCore</span>
-                    <span class="px-3 py-1 bg-white/10 rounded-lg">C# Scripting</span>
-                    <span class="px-3 py-1 bg-white/10 rounded-lg">Figma UI Design</span>
-                    <span class="px-3 py-1 bg-white/10 rounded-lg">Geospatial API</span>
+            <div class="bg-slate-900 text-white p-10 rounded-[2.5rem] md:col-span-3 flex flex-col md:flex-row items-center justify-between gap-8 hover-lift" data-aos="fade-up">
+                <div class="max-w-md text-center md:text-left">
+                    <h3 class="text-2xl font-bold mb-2">Immersive Storytelling</h3>
+                    <p class="text-slate-400">Turning a simple campus walk into a rich, interactive historical adventure.</p>
+                </div>
+                <div class="flex gap-4">
+                    <span class="px-4 py-2 bg-white/10 rounded-full text-sm">Interaction Design</span>
+                    <span class="px-4 py-2 bg-white/10 rounded-full text-sm">XR Tech</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Process Timeline -->
-    <section id="process" class="py-32 bg-white/5">
-        <div class="max-w-4xl mx-auto px-6">
-            <h2 class="text-4xl font-bold mb-20 text-center">Development Journey</h2>
-            <div class="space-y-24">
-                <div class="flex flex-col md:flex-row gap-12 items-start" data-aos="fade-up">
-                    <div class="text-6xl font-black text-blue-500/20 italic">01</div>
-                    <div>
-                        <h3 class="text-2xl font-bold mb-4">Research & Ideation</h3>
-                        <p class="text-slate-400">Identifying the gap in traditional tours. Why do people get lost? What makes a guide "boring"? We analyzed the synergy between physical space and digital overlay.</p>
-                    </div>
+    <!-- Design Process (带动态线条的列表) -->
+    <section id="process" class="py-24 max-w-3xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-20 text-center" data-aos="fade-up">The Process</h2>
+        <div class="space-y-16">
+            <!-- Step 1 -->
+            <div class="flex gap-8 group" data-aos="fade-up">
+                <div class="text-4xl font-black text-slate-100 group-hover:text-blue-500 transition-colors duration-500 italic">01</div>
+                <div class="pt-1 border-l-2 border-slate-100 pl-8 group-hover:border-blue-500 transition-all duration-500">
+                    <h3 class="text-xl font-bold mb-3">Initial Concept</h3>
+                    <p class="text-slate-500 leading-relaxed">Identifying user pain points in traditional tours and proposing a digital-first XR solution.</p>
                 </div>
-                <div class="flex flex-col md:flex-row gap-12 items-start" data-aos="fade-up">
-                    <div class="text-6xl font-black text-purple-500/20 italic">02</div>
-                    <div>
-                        <h3 class="text-2xl font-bold mb-4">Prototyping Interaction</h3>
-                        <p class="text-slate-400">Experimenting with how the AR character should appear. Should it float? Should it walk beside you? We tested multiple UI layouts for better accessibility.</p>
-                    </div>
+            </div>
+            <!-- Step 2 -->
+            <div class="flex gap-8 group" data-aos="fade-up" data-aos-delay="100">
+                <div class="text-4xl font-black text-slate-100 group-hover:text-purple-500 transition-colors duration-500 italic">02</div>
+                <div class="pt-1 border-l-2 border-slate-100 pl-8 group-hover:border-purple-500 transition-all duration-500">
+                    <h3 class="text-xl font-bold mb-3">Research & User Flow</h3>
+                    <p class="text-slate-500 leading-relaxed">Analyzing how humans interact with spatial data and designing the "trigger-response" mechanism.</p>
                 </div>
-                <!-- ... 你可以继续添加更多步骤 ... -->
+            </div>
+            <!-- Step 3 -->
+            <div class="flex gap-8 group" data-aos="fade-up" data-aos-delay="200">
+                <div class="text-4xl font-black text-slate-100 group-hover:text-indigo-500 transition-colors duration-500 italic">03</div>
+                <div class="pt-1 border-l-2 border-slate-100 pl-8 group-hover:border-indigo-500 transition-all duration-500">
+                    <h3 class="text-xl font-bold mb-3">Prototyping</h3>
+                    <p class="text-slate-500 leading-relaxed">Developing the virtual guide character and testing GPS accuracy on campus grounds.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer id="contact" class="py-20 text-center border-t border-white/10 px-6">
-        <h2 class="text-3xl font-bold mb-8">Let's Connect</h2>
-        <div class="flex justify-center gap-8 mb-12">
-            <a href="#" class="text-slate-400 hover:text-white transition">GitHub</a>
-            <a href="#" class="text-slate-400 hover:text-white transition">LinkedIn</a>
-            <a href="#" class="text-slate-400 hover:text-white transition">Email</a>
+    <footer id="contact" class="py-20 border-t border-slate-100 px-6 text-center">
+        <h2 class="text-3xl font-bold mb-8" data-aos="fade-up">Let's Connect</h2>
+        <div class="flex justify-center gap-8 mb-12" data-aos="fade-up" data-aos-delay="100">
+            <a href="#" class="text-slate-400 hover:text-slate-900 transition underline decoration-blue-500 underline-offset-8">GitHub</a>
+            <a href="#" class="text-slate-400 hover:text-slate-900 transition underline decoration-purple-500 underline-offset-8">Email</a>
         </div>
-        <p class="text-slate-500 text-sm">© 2026 Process Portfolio. Crafted for XR Excellence.</p>
+        <p class="text-slate-300 text-sm">© 2026 XR Campus Tour Portfolio. Made with Love.</p>
     </footer>
 
-    <!-- AOS 动画脚本 -->
+    <!-- AOS 脚本 -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 1000, once: true });
-        
-        // 顶部进度条逻辑
+        // 初始化动画库
+        AOS.init({ duration: 800, once: true });
+
+        // 滚动进度条逻辑
         window.onscroll = function() {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
