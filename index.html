@@ -5,244 +5,661 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XR Campus Tour | Full Process Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
+
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #ffffff; }
-        .bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -20%, #eff6ff 0%, #ffffff 50%); z-index: -1; }
-        .text-gradient { background: linear-gradient(to right, #2563eb, #9333ea, #2563eb); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 5s linear infinite; }
-        @keyframes shine { to { background-position: 200% center; } }
-        .hover-lift { transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
-        .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
-        #progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(to right, #2563eb, #9333ea); z-index: 100; width: 0%; transition: width 0.1s; }
+        :root {
+            --bg: #f7f4ee;
+            --bg-soft: #fffdf8;
+            --surface: rgba(255, 255, 255, 0.72);
+            --surface-strong: rgba(255, 255, 255, 0.9);
+            --line: rgba(14, 32, 44, 0.09);
+            --ink: #14202a;
+            --muted: #5f6e78;
+            --navy: #14324a;
+            --teal: #2c9b8f;
+            --amber: #f3a93b;
+            --coral: #ef7a5b;
+            --shadow: 0 24px 70px rgba(16, 34, 46, 0.10);
+            --radius-xl: 2rem;
+            --radius-2xl: 2.75rem;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-padding-top: 7rem;
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            font-family: "Noto Sans SC", sans-serif;
+            background:
+                radial-gradient(circle at 12% 18%, rgba(44, 155, 143, 0.18), transparent 30%),
+                radial-gradient(circle at 82% 12%, rgba(243, 169, 59, 0.22), transparent 28%),
+                radial-gradient(circle at 80% 72%, rgba(239, 122, 91, 0.16), transparent 26%),
+                linear-gradient(180deg, #f6f2e9 0%, #fffdf8 44%, #f4faf7 100%);
+            background-attachment: fixed;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(20, 32, 42, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(20, 32, 42, 0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 88%);
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(140deg, rgba(255, 255, 255, 0.55), transparent 40%),
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.75), transparent 24%);
+            z-index: -3;
+        }
+
+        h1,
+        h2,
+        h3,
+        .display-font,
+        nav,
+        .nav-pill,
+        .cta-button {
+            font-family: "Space Grotesk", sans-serif;
+        }
+
+        .shell {
+            position: relative;
+            overflow: clip;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 999px;
+            filter: blur(18px);
+            opacity: 0.45;
+            z-index: -1;
+        }
+
+        .glass {
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.72));
+            border: 1px solid rgba(20, 32, 42, 0.08);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .hover-lift {
+            transition:
+                transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 0.35s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 80px rgba(16, 34, 46, 0.15);
+            border-color: rgba(44, 155, 143, 0.28);
+        }
+
+        .text-gradient {
+            background: linear-gradient(115deg, var(--navy), var(--teal), var(--amber));
+            background-size: 180% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shimmer 7s linear infinite;
+        }
+
+        @keyframes shimmer {
+            to {
+                background-position: 180% center;
+            }
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 72px;
+            height: 4px;
+            transform: translateX(-50%);
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--teal), var(--amber), var(--coral));
+        }
+
+        .hero-panel {
+            position: relative;
+            border-radius: 2.5rem;
+            padding: 2rem;
+        }
+
+        .hero-panel::before {
+            content: "";
+            position: absolute;
+            inset: 1rem;
+            border-radius: 2rem;
+            border: 1px solid rgba(20, 32, 42, 0.08);
+            pointer-events: none;
+        }
+
+        .hero-ring {
+            position: absolute;
+            inset: auto;
+            border-radius: 999px;
+            border: 1px dashed rgba(20, 32, 42, 0.12);
+            animation: spin 22s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .nav-link {
+            position: relative;
+            color: var(--muted);
+            transition: color 0.25s ease;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -0.5rem;
+            width: 100%;
+            height: 2px;
+            transform: scaleX(0);
+            transform-origin: left;
+            background: linear-gradient(90deg, var(--teal), var(--amber));
+            transition: transform 0.25s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.is-active {
+            color: var(--ink);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.is-active::after {
+            transform: scaleX(1);
+        }
+
+        .nav-pill {
+            transition:
+                background-color 0.25s ease,
+                color 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .nav-pill:hover,
+        .nav-pill.is-active {
+            background: linear-gradient(135deg, var(--navy), var(--teal));
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .cta-button {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
+            transform: translateX(-130%);
+            transition: transform 0.7s ease;
+        }
+
+        .cta-button:hover::before {
+            transform: translateX(130%);
+        }
+
+        .concept-dark {
+            background:
+                radial-gradient(circle at top right, rgba(243, 169, 59, 0.22), transparent 28%),
+                linear-gradient(145deg, #102330 0%, #14324a 55%, #1d4f5d 100%);
+        }
+
+        .feature-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(140deg, rgba(255, 255, 255, 0.3), transparent 45%);
+            pointer-events: none;
+        }
+
+        .timeline-wrap {
+            position: relative;
+        }
+
+        .timeline-wrap::before {
+            content: "";
+            position: absolute;
+            left: 1.65rem;
+            top: 0.5rem;
+            bottom: 0.5rem;
+            width: 2px;
+            background: linear-gradient(180deg, rgba(44, 155, 143, 0.18), rgba(243, 169, 59, 0.22), rgba(239, 122, 91, 0.2));
+        }
+
+        .timeline-item {
+            position: relative;
+        }
+
+        .timeline-card {
+            position: relative;
+            border-radius: var(--radius-xl);
+        }
+
+        .timeline-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(145deg, rgba(44, 155, 143, 0.06), rgba(243, 169, 59, 0.08), rgba(239, 122, 91, 0.04));
+            pointer-events: none;
+        }
+
+        .step-marker {
+            position: relative;
+            box-shadow: 0 16px 35px rgba(20, 32, 42, 0.10);
+        }
+
+        .step-marker::after {
+            content: "";
+            position: absolute;
+            inset: 5px;
+            border-radius: 1rem;
+            border: 1px solid rgba(20, 32, 42, 0.08);
+        }
+
+        .team-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius-2xl);
+        }
+
+        .team-card::after {
+            content: "";
+            position: absolute;
+            inset: auto -3rem -4rem auto;
+            width: 10rem;
+            height: 10rem;
+            border-radius: 999px;
+            background: radial-gradient(circle, rgba(243, 169, 59, 0.18), transparent 72%);
+            pointer-events: none;
+        }
+
+        .team-avatar {
+            position: relative;
+            border-radius: 999px;
+            padding: 0.4rem;
+            background: linear-gradient(135deg, rgba(20, 50, 74, 0.20), rgba(44, 155, 143, 0.24), rgba(243, 169, 59, 0.22));
+            box-shadow: 0 16px 30px rgba(20, 32, 42, 0.12);
+        }
+
+        .quote-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-card::before {
+            content: "“";
+            position: absolute;
+            left: 1.25rem;
+            top: -2rem;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 9rem;
+            color: rgba(20, 50, 74, 0.08);
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 0;
+            z-index: 100;
+            background: linear-gradient(90deg, var(--teal), var(--amber), var(--coral));
+            box-shadow: 0 0 18px rgba(243, 169, 59, 0.45);
+        }
+
+        .mobile-dock {
+            box-shadow: 0 20px 50px rgba(16, 34, 46, 0.14);
+        }
+
+        #site-nav.nav-compact {
+            padding-top: 0.7rem;
+            padding-bottom: 0.7rem;
+        }
+
+        @media (max-width: 767px) {
+            .timeline-wrap::before {
+                left: 1.35rem;
+            }
+        }
     </style>
 </head>
-<body class="text-slate-900 antialiased">
-
+<body class="antialiased">
     <div id="progress-bar"></div>
-    <div class="bg-glow"></div>
 
-    <!-- 导航栏 -->
-    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
-        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <span class="font-bold text-lg tracking-tight">XR Campus Tour</span>
-            <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-500">
-                <a href="#about" class="hover:text-blue-600 transition">About</a>
-                <a href="#concepts" class="hover:text-blue-600 transition">Concepts</a>
-                <a href="#process" class="hover:text-blue-600 transition">Process</a>
-                <a href="#reflection" class="hover:text-blue-600 transition">Reflection</a>
-                <a href="#contact" class="px-5 py-2 bg-slate-900 text-white rounded-full hover:bg-blue-600 transition shadow-lg">Contact</a>
+    <div class="shell min-h-screen">
+        <div class="blob top-24 -left-16 h-56 w-56 bg-emerald-200"></div>
+        <div class="blob top-40 right-8 h-72 w-72 bg-amber-200"></div>
+        <div class="blob bottom-40 left-1/2 h-64 w-64 -translate-x-1/2 bg-orange-200"></div>
+
+        <nav id="site-nav" class="fixed top-4 left-1/2 z-50 w-[calc(100%-1.5rem)] max-w-6xl -translate-x-1/2 rounded-full glass px-4 py-3 transition-all duration-300 md:top-6 md:w-[calc(100%-3rem)] md:px-6">
+            <div class="flex items-center justify-between gap-4">
+                <a href="#top" class="display-font text-sm font-bold tracking-[0.22em] text-slate-700 md:text-base">XR CAMPUS TOUR</a>
+                <div class="hidden items-center gap-7 text-sm font-medium md:flex">
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#concepts" class="nav-link">Concepts</a>
+                    <a href="#process" class="nav-link">Process</a>
+                    <a href="#persona" class="nav-link">Team</a>
+                    <a href="#reflection" class="nav-link">Reflection</a>
+                    <a href="#contact" class="rounded-full bg-slate-900 px-5 py-2.5 text-white transition hover:bg-[#1d4f5d]">Contact</a>
+                </div>
+                <a href="#contact" class="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-teal-300 hover:text-slate-900 md:hidden">Contact</a>
             </div>
+        </nav>
+
+        <main id="top">
+            <section class="relative px-6 pb-20 pt-36 md:pt-44">
+                <div class="mx-auto max-w-6xl">
+                    <div class="hero-panel glass" data-aos="fade-up" data-aos-duration="1000">
+                        <div class="hero-ring right-[-4rem] top-[-4rem] h-48 w-48"></div>
+                        <div class="hero-ring bottom-[-5rem] left-[-4rem] h-56 w-56"></div>
+
+                        <div class="mx-auto max-w-4xl text-center">
+                            <h1 class="mb-8 text-5xl font-extrabold tracking-[-0.06em] text-slate-900 sm:text-6xl md:text-8xl">
+                                XR <span class="text-gradient">Campus Tour</span>
+                            </h1>
+
+                            <p class="mx-auto mb-12 max-w-2xl text-lg font-light leading-relaxed text-slate-600 md:text-xl">
+                                An interactive journey bridging reality and digital storytelling through location-based AR technology.
+                            </p>
+
+                            <a href="#process" class="cta-button inline-flex items-center justify-center rounded-full border border-slate-200 bg-slate-900 px-8 py-4 text-base font-bold text-white shadow-lg shadow-slate-900/10 transition duration-300 hover:-translate-y-1 hover:border-teal-300 hover:bg-[#17394f]">
+                                Explore Process
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="px-6 py-20 md:py-24">
+                <div class="mx-auto max-w-6xl">
+                    <div class="grid gap-8 md:grid-cols-2">
+                        <article class="card hover-lift rounded-[2rem] p-10 md:p-12" data-aos="fade-up">
+                            <h2 class="mb-6 text-3xl font-bold tracking-tight text-slate-900">About This Portfolio</h2>
+                            <p class="leading-relaxed text-slate-600">
+                                This website documents the full development process of the XR Campus Tour project. Instead of only presenting the final outcome, this portfolio focuses on the design process, research, experimentation, and iterative development behind the project.
+                            </p>
+                        </article>
+
+                        <article class="hover-lift rounded-[2rem] border border-cyan-100 bg-gradient-to-br from-[#14324a] via-[#1d4f5d] to-[#2c9b8f] p-10 text-white shadow-[0_30px_80px_rgba(20,50,74,0.25)] md:p-12" data-aos="fade-up" data-aos-delay="120">
+                            <h2 class="mb-6 text-3xl font-bold tracking-tight">Project Overview</h2>
+                            <p class="leading-relaxed text-white/80">
+                                The project aims to enhance traditional campus visits by introducing interactive digital content at specific physical locations. When users approach a landmark, an AR character appears and introduces the location through narration.
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section id="concepts" class="px-6 py-20 md:py-24">
+                <div class="mx-auto max-w-6xl">
+                    <div class="mb-16 text-center">
+                        <h2 class="section-title text-4xl font-bold tracking-tight text-slate-900" data-aos="fade-up">Key Concepts</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+                        <article class="feature-card concept-dark hover-lift relative overflow-hidden rounded-[2.4rem] p-10 text-white md:col-span-2 md:p-12" data-aos="fade-right">
+                            <div class="absolute -right-8 -top-8 h-40 w-40 rounded-full border border-white/10"></div>
+                            <div class="absolute -bottom-6 -right-4 text-[9rem] opacity-10">📍</div>
+                            <h3 class="mb-4 text-2xl font-bold">Location-Based Interaction</h3>
+                            <p class="max-w-md text-lg leading-relaxed text-slate-200">The application detects the user's geographic position and triggers interactive XR content when the user approaches predefined campus landmarks.</p>
+                        </article>
+
+                        <article class="card feature-card hover-lift flex flex-col justify-center rounded-[2.4rem] bg-gradient-to-br from-white to-[#eefaf8] p-10 text-center" data-aos="fade-left">
+                            <span class="mb-6 text-5xl">🤖</span>
+                            <h3 class="mb-2 text-xl font-bold text-slate-900">AR Guide</h3>
+                            <p class="text-sm leading-relaxed text-slate-500">A virtual guide character appears to introduce campus locations.</p>
+                        </article>
+
+                        <article class="feature-card hover-lift rounded-[2.4rem] border border-orange-100 bg-gradient-to-r from-[#fff7e8] via-[#fffdfa] to-[#fff0ea] p-10 md:col-span-3 md:p-12" data-aos="fade-up">
+                            <div class="flex items-start gap-6 md:items-center md:gap-8">
+                                <span class="mt-1 text-5xl md:mt-0">✨</span>
+                                <div>
+                                    <h3 class="mb-2 text-xl font-bold text-slate-900">Immersive Exploration</h3>
+                                    <p class="leading-relaxed text-slate-600">Transforming a simple walk into an engaging story-driven tour.</p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section id="process" class="px-6 py-24 md:py-32">
+                <div class="mx-auto max-w-5xl">
+                    <div class="mb-20 text-center">
+                        <h2 class="section-title text-4xl font-bold tracking-tight text-slate-900 md:text-5xl" data-aos="fade-up">Design Process</h2>
+                    </div>
+
+                    <div class="timeline-wrap space-y-8 md:space-y-10">
+                        <div class="timeline-item flex gap-6 md:gap-10" data-aos="fade-up">
+                            <div class="step-marker z-10 flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-white text-xl font-bold text-slate-900 ring-1 ring-slate-200">01</div>
+                            <article class="timeline-card card hover-lift w-full p-7 md:p-8">
+                                <h3 class="mb-4 text-2xl font-bold text-slate-900">Initial Concept</h3>
+                                <p class="text-lg leading-relaxed text-slate-600">The project began with the idea of improving the campus tour experience for visitors and new students. Traditional tours often rely on static maps or human guides, which may not always be available.</p>
+                            </article>
+                        </div>
+
+                        <div class="timeline-item flex gap-6 md:gap-10" data-aos="fade-up">
+                            <div class="step-marker z-10 flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-white to-[#eefaf8] text-xl font-bold text-slate-900 ring-1 ring-slate-200">02</div>
+                            <article class="timeline-card card hover-lift w-full p-7 md:p-8">
+                                <h3 class="mb-4 text-2xl font-bold text-slate-900">Research</h3>
+                                <p class="text-lg leading-relaxed text-slate-600">Research focused on extended reality technologies, location-based interaction systems, and existing digital tour applications. The goal was to identify how XR could enhance spatial storytelling.</p>
+                            </article>
+                        </div>
+
+                        <div class="timeline-item flex gap-6 md:gap-10" data-aos="fade-up">
+                            <div class="step-marker z-10 flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-white to-[#fff5ea] text-xl font-bold text-slate-900 ring-1 ring-slate-200">03</div>
+                            <article class="timeline-card card hover-lift w-full p-7 md:p-8">
+                                <h3 class="mb-4 text-2xl font-bold text-slate-900">Interaction Design</h3>
+                                <p class="text-lg leading-relaxed text-slate-600">Different interaction models were explored, including how users trigger content, how the AR guide appears, and how information should be presented to maintain engagement without overwhelming users.</p>
+                            </article>
+                        </div>
+
+                        <div class="timeline-item flex gap-6 md:gap-10" data-aos="fade-up">
+                            <div class="step-marker z-10 flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-white to-[#eef3ff] text-xl font-bold text-slate-900 ring-1 ring-slate-200">04</div>
+                            <article class="timeline-card card hover-lift w-full p-7 md:p-8">
+                                <h3 class="mb-4 text-2xl font-bold text-slate-900">Prototype Development</h3>
+                                <p class="text-lg leading-relaxed text-slate-600">A prototype was developed using XR development tools. The system implemented location detection, AR visualization, and a basic virtual guide character that introduces selected landmarks.</p>
+                            </article>
+                        </div>
+
+                        <div class="timeline-item flex gap-6 md:gap-10" data-aos="fade-up">
+                            <div class="step-marker z-10 flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-white to-[#fff1eb] text-xl font-bold text-slate-900 ring-1 ring-slate-200">05</div>
+                            <article class="timeline-card card hover-lift w-full p-7 md:p-8">
+                                <h3 class="mb-4 text-2xl font-bold text-slate-900">Testing and Refinement</h3>
+                                <p class="text-lg leading-relaxed text-slate-600">The prototype was evaluated and refined by adjusting trigger distances, improving guide narration, and optimizing interaction flow to make the experience smoother for users.</p>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="persona" class="px-6 py-20 md:py-24">
+                <div class="mx-auto max-w-6xl">
+                    <div class="mb-16 text-center">
+                        <h2 class="section-title text-4xl font-bold tracking-tight text-slate-900" data-aos="fade-up">Our Team</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                        <article class="team-card card hover-lift p-8 text-center" data-aos="fade-up" data-aos-delay="0">
+                            <div class="team-avatar relative mx-auto mb-6 h-32 w-32">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Member 1" class="h-full w-full rounded-full border-4 border-white object-cover bg-white">
+                            </div>
+                            <h3 class="mb-1 text-xl font-bold text-slate-900">张三 (Name)</h3>
+                            <p class="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-teal-600">Project Leader</p>
+                            <p class="text-sm leading-relaxed text-slate-500">
+                                负责项目的整体构思与架构设计，热衷于探索 XR 技术在教育领域的可能性。
+                            </p>
+                        </article>
+
+                        <article class="team-card card hover-lift p-8 text-center" data-aos="fade-up" data-aos-delay="100">
+                            <div class="team-avatar relative mx-auto mb-6 h-32 w-32">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka" alt="Member 2" class="h-full w-full rounded-full border-4 border-white object-cover bg-white">
+                            </div>
+                            <h3 class="mb-1 text-xl font-bold text-slate-900">李四 (Name)</h3>
+                            <p class="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-amber-600">UI/UX Designer</p>
+                            <p class="text-sm leading-relaxed text-slate-500">
+                                专注于用户交互体验，致力于打造最直观、最丝滑的增强现实界面。
+                            </p>
+                        </article>
+
+                        <article class="team-card card hover-lift p-8 text-center" data-aos="fade-up" data-aos-delay="200">
+                            <div class="team-avatar relative mx-auto mb-6 h-32 w-32">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Buddy" alt="Member 3" class="h-full w-full rounded-full border-4 border-white object-cover bg-white">
+                            </div>
+                            <h3 class="mb-1 text-xl font-bold text-slate-900">王五 (Name)</h3>
+                            <p class="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-sky-600">Lead Developer</p>
+                            <p class="text-sm leading-relaxed text-slate-500">
+                                精通 Unity 与 AR 相关开发，将天马行空的创意转化为稳定的代码逻辑。
+                            </p>
+                        </article>
+
+                        <article class="team-card card hover-lift p-8 text-center" data-aos="fade-up" data-aos-delay="300">
+                            <div class="team-avatar relative mx-auto mb-6 h-32 w-32">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Max" alt="Member 4" class="h-full w-full rounded-full border-4 border-white object-cover bg-white">
+                            </div>
+                            <h3 class="mb-1 text-xl font-bold text-slate-900">赵六 (Name)</h3>
+                            <p class="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-orange-500">Research Specialist</p>
+                            <p class="text-sm leading-relaxed text-slate-500">
+                                负责前期市场调研与用户测试，确保项目能够真实解决校园导览的痛点。
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section id="reflection" class="px-6 py-24 md:py-32">
+                <div class="mx-auto max-w-5xl">
+                    <div class="quote-card glass rounded-[2.5rem] px-8 py-14 text-center md:px-16 md:py-20">
+                        <h2 class="mb-10 text-4xl font-bold tracking-tight text-slate-900" data-aos="fade-up">Reflection</h2>
+                        <p class="mx-auto max-w-4xl text-xl leading-relaxed text-slate-600 italic" data-aos="fade-up" data-aos-delay="120">
+                            "Developing the XR Campus Tour project highlighted the importance of integrating physical environments with digital interaction. Designing experiences that respond to real-world locations requires careful consideration of technical constraints and user experience."
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <footer id="contact" class="px-6 pb-32 pt-10 md:pb-24">
+                <div class="mx-auto max-w-5xl rounded-[2.5rem] border border-slate-200 bg-[#14202a] px-8 py-14 text-center text-white shadow-[0_30px_100px_rgba(20,32,42,0.24)] md:px-16 md:py-16">
+                    <h2 class="mb-12 text-4xl font-bold tracking-tight">Contact Me</h2>
+                    <div class="flex flex-col items-center justify-center gap-5 text-base font-medium text-white/70 md:flex-row md:gap-10">
+                        <a href="mailto:yourname@email.com" class="rounded-full border border-white/10 bg-white/5 px-6 py-3 transition hover:-translate-y-1 hover:border-amber-300 hover:text-white">
+                            <span class="mr-2 text-xl">📧</span> yourname@email.com
+                        </a>
+                        <a href="https://github.com/yourusername" class="rounded-full border border-white/10 bg-white/5 px-6 py-3 transition hover:-translate-y-1 hover:border-teal-300 hover:text-white">
+                            <span class="mr-2 text-xl">🔗</span> github.com/yourusername
+                        </a>
+                    </div>
+                    <p class="mt-16 text-sm italic text-white/35">© 2026 XR Campus Tour Portfolio. Created for CPT208 Excellence.</p>
+                </div>
+            </footer>
+        </main>
+
+        <div class="mobile-dock fixed bottom-4 left-1/2 z-50 flex w-[calc(100%-1.5rem)] max-w-md -translate-x-1/2 items-center justify-between rounded-full glass px-3 py-2 md:hidden">
+            <a href="#about" class="nav-pill rounded-full px-3 py-2 text-xs font-semibold text-slate-600">About</a>
+            <a href="#concepts" class="nav-pill rounded-full px-3 py-2 text-xs font-semibold text-slate-600">Concepts</a>
+            <a href="#process" class="nav-pill rounded-full px-3 py-2 text-xs font-semibold text-slate-600">Process</a>
+            <a href="#persona" class="nav-pill rounded-full px-3 py-2 text-xs font-semibold text-slate-600">Team</a>
+            <a href="#contact" class="nav-pill rounded-full px-3 py-2 text-xs font-semibold text-slate-600">Contact</a>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="pt-40 pb-20 px-6 text-center">
-        <div data-aos="fade-up" data-aos-duration="1000">
-            <h1 class="text-6xl md:text-8xl font-extrabold mb-8 tracking-tighter">
-                XR <span class="text-gradient">Campus Tour</span>
-            </h1>
-            <p class="max-w-2xl mx-auto text-slate-500 text-lg md:text-xl mb-12 leading-relaxed font-light">
-                An interactive journey bridging reality and digital storytelling through location-based AR technology.
-            </p>
-            <a href="#process" class="inline-block bg-slate-50 border border-slate-200 px-8 py-4 rounded-2xl font-semibold hover:bg-white hover:shadow-xl transition-all">Explore Process</a>
-        </div>
-    </section>
-
-    <!-- About & Overview -->
-    <section id="about" class="py-24 max-w-6xl mx-auto px-6">
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="bg-slate-50 p-12 rounded-[3rem] hover-lift" data-aos="fade-up">
-                <h2 class="text-3xl font-bold mb-6">About This Portfolio</h2>
-                <p class="text-slate-600 leading-relaxed">
-                    This website documents the full development process of the XR Campus Tour project. Instead of only presenting the final outcome, this portfolio focuses on the design process, research, experimentation, and iterative development behind the project.
-                </p>
-            </div>
-            <div class="bg-blue-50/50 border border-blue-100 p-12 rounded-[3rem] hover-lift" data-aos="fade-up" data-aos-delay="100">
-                <h2 class="text-3xl font-bold mb-6 text-blue-900">Project Overview</h2>
-                <p class="text-blue-800/60 leading-relaxed">
-                    The project aims to enhance traditional campus visits by introducing interactive digital content at specific physical locations. When users approach a landmark, an AR character appears and introduces the location through narration.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Key Concepts (Bento Grid) -->
-    <section id="concepts" class="py-24 max-w-6xl mx-auto px-6">
-        <h2 class="text-4xl font-bold mb-16 text-center" data-aos="fade-up">Key Concepts</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="md:col-span-2 bg-slate-900 text-white p-12 rounded-[3rem] hover-lift relative overflow-hidden" data-aos="fade-right">
-                <div class="absolute -right-4 -bottom-4 text-[10rem] opacity-10">📍</div>
-                <h3 class="text-2xl font-bold mb-4">Location-Based Interaction</h3>
-                <p class="text-slate-400 text-lg max-w-md">The application detects the user's geographic position and triggers interactive XR content when the user approaches predefined campus landmarks.</p>
-            </div>
-            <div class="bg-indigo-50 p-12 rounded-[3rem] hover-lift flex flex-col justify-center text-center" data-aos="fade-left">
-                <span class="text-5xl mb-6">🤖</span>
-                <h3 class="text-xl font-bold mb-2">AR Guide</h3>
-                <p class="text-slate-500 text-sm">A virtual guide character appears to introduce campus locations.</p>
-            </div>
-            <div class="bg-purple-50 p-12 rounded-[3rem] hover-lift md:col-span-3 flex items-center gap-8" data-aos="fade-up">
-                <span class="text-5xl">✨</span>
-                <div>
-                    <h3 class="text-xl font-bold mb-2">Immersive Exploration</h3>
-                    <p class="text-slate-500">Transforming a simple walk into an engaging story-driven tour.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Design Process (Full 5 Steps) -->
-    <section id="process" class="py-32 max-w-4xl mx-auto px-6">
-        <h2 class="text-5xl font-bold mb-24 text-center" data-aos="fade-up">Design Process</h2>
-        
-        <div class="space-y-24 relative">
-            <!-- 连贯的垂直线条 -->
-            <div class="absolute left-[27px] top-2 bottom-2 w-[2px] bg-slate-100 hidden md:block"></div>
-
-            <!-- Step 1 -->
-            <div class="flex gap-10 group" data-aos="fade-up">
-                <div class="w-14 h-14 rounded-2xl bg-white border-2 border-slate-100 flex-shrink-0 flex items-center justify-center font-bold text-xl group-hover:border-blue-500 group-hover:text-blue-500 transition-all duration-500 z-10 bg-white">01</div>
-                <div class="pt-2">
-                    <h3 class="text-2xl font-bold mb-4 group-hover:text-blue-600 transition-colors">Initial Concept</h3>
-                    <p class="text-slate-500 leading-relaxed text-lg">The project began with the idea of improving the campus tour experience for visitors and new students. Traditional tours often rely on static maps or human guides, which may not always be available.</p>
-                </div>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="flex gap-10 group" data-aos="fade-up">
-                <div class="w-14 h-14 rounded-2xl bg-white border-2 border-slate-100 flex-shrink-0 flex items-center justify-center font-bold text-xl group-hover:border-indigo-500 group-hover:text-indigo-500 transition-all duration-500 z-10 bg-white">02</div>
-                <div class="pt-2">
-                    <h3 class="text-2xl font-bold mb-4 group-hover:text-indigo-600 transition-colors">Research</h3>
-                    <p class="text-slate-500 leading-relaxed text-lg">Research focused on extended reality technologies, location-based interaction systems, and existing digital tour applications. The goal was to identify how XR could enhance spatial storytelling.</p>
-                </div>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="flex gap-10 group" data-aos="fade-up">
-                <div class="w-14 h-14 rounded-2xl bg-white border-2 border-slate-100 flex-shrink-0 flex items-center justify-center font-bold text-xl group-hover:border-purple-500 group-hover:text-purple-500 transition-all duration-500 z-10 bg-white">03</div>
-                <div class="pt-2">
-                    <h3 class="text-2xl font-bold mb-4 group-hover:text-purple-600 transition-colors">Interaction Design</h3>
-                    <p class="text-slate-500 leading-relaxed text-lg">Different interaction models were explored, including how users trigger content, how the AR guide appears, and how information should be presented to maintain engagement without overwhelming users.</p>
-                </div>
-            </div>
-
-            <!-- Step 4 -->
-            <div class="flex gap-10 group" data-aos="fade-up">
-                <div class="w-14 h-14 rounded-2xl bg-white border-2 border-slate-100 flex-shrink-0 flex items-center justify-center font-bold text-xl group-hover:border-pink-500 group-hover:text-pink-500 transition-all duration-500 z-10 bg-white">04</div>
-                <div class="pt-2">
-                    <h3 class="text-2xl font-bold mb-4 group-hover:text-pink-600 transition-colors">Prototype Development</h3>
-                    <p class="text-slate-500 leading-relaxed text-lg">A prototype was developed using XR development tools. The system implemented location detection, AR visualization, and a basic virtual guide character that introduces selected landmarks.</p>
-                </div>
-            </div>
-
-            <!-- Step 5 -->
-            <div class="flex gap-10 group" data-aos="fade-up">
-                <div class="w-14 h-14 rounded-2xl bg-white border-2 border-slate-100 flex-shrink-0 flex items-center justify-center font-bold text-xl group-hover:border-orange-500 group-hover:text-orange-500 transition-all duration-500 z-10 bg-white">05</div>
-                <div class="pt-2">
-                    <h3 class="text-2xl font-bold mb-4 group-hover:text-orange-600 transition-colors">Testing and Refinement</h3>
-                    <p class="text-slate-500 leading-relaxed text-lg">The prototype was evaluated and refined by adjusting trigger distances, improving guide narration, and optimizing interaction flow to make the experience smoother for users.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Team Persona Section (团队成员模块) -->
-    <section id="persona" class="py-24 max-w-6xl mx-auto px-6">
-        <h2 class="text-4xl font-bold mb-16 text-center" data-aos="fade-up">Our Team</h2>
-        
-        <!-- 四人网格布局：手机1列，平板2列，电脑4列 -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            
-            <!-- 成员 1 -->
-            <div class="group bg-white p-8 rounded-[3rem] border border-slate-100 hover-lift text-center" data-aos="fade-up" data-aos-delay="0">
-                <div class="relative w-32 h-32 mx-auto mb-6">
-                    <!-- 装饰圆环 -->
-                    <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                    <!-- 头像图片 (现在用占位图，你可以换成自己的链接) -->
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Member 1" class="relative w-full h-full rounded-full object-cover border-4 border-white shadow-sm">
-                </div>
-                <h3 class="text-xl font-bold mb-1">张三 (Name)</h3>
-                <p class="text-blue-600 text-xs font-bold uppercase tracking-widest mb-4">Project Leader</p>
-                <p class="text-slate-500 text-sm leading-relaxed">
-                    负责项目的整体构思与架构设计，热衷于探索 XR 技术在教育领域的可能性。
-                </p>
-            </div>
-
-            <!-- 成员 2 -->
-            <div class="group bg-white p-8 rounded-[3rem] border border-slate-100 hover-lift text-center" data-aos="fade-up" data-aos-delay="100">
-                <div class="relative w-32 h-32 mx-auto mb-6">
-                    <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka" alt="Member 2" class="relative w-full h-full rounded-full object-cover border-4 border-white shadow-sm">
-                </div>
-                <h3 class="text-xl font-bold mb-1">李四 (Name)</h3>
-                <p class="text-purple-600 text-xs font-bold uppercase tracking-widest mb-4">UI/UX Designer</p>
-                <p class="text-slate-500 text-sm leading-relaxed">
-                    专注于用户交互体验，致力于打造最直观、最丝滑的增强现实界面。
-                </p>
-            </div>
-
-            <!-- 成员 3 -->
-            <div class="group bg-white p-8 rounded-[3rem] border border-slate-100 hover-lift text-center" data-aos="fade-up" data-aos-delay="200">
-                <div class="relative w-32 h-32 mx-auto mb-6">
-                    <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-indigo-500 to-blue-500 blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Buddy" alt="Member 3" class="relative w-full h-full rounded-full object-cover border-4 border-white shadow-sm">
-                </div>
-                <h3 class="text-xl font-bold mb-1">王五 (Name)</h3>
-                <p class="text-indigo-600 text-xs font-bold uppercase tracking-widest mb-4">Lead Developer</p>
-                <p class="text-slate-500 text-sm leading-relaxed">
-                    精通 Unity 与 AR 相关开发，将天马行空的创意转化为稳定的代码逻辑。
-                </p>
-            </div>
-
-            <!-- 成员 4 -->
-            <div class="group bg-white p-8 rounded-[3rem] border border-slate-100 hover-lift text-center" data-aos="fade-up" data-aos-delay="300">
-                <div class="relative w-32 h-32 mx-auto mb-6">
-                    <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-orange-400 to-pink-500 blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Max" alt="Member 4" class="relative w-full h-full rounded-full object-cover border-4 border-white shadow-sm">
-                </div>
-                <h3 class="text-xl font-bold mb-1">赵六 (Name)</h3>
-                <p class="text-orange-500 text-xs font-bold uppercase tracking-widest mb-4">Research Specialist</p>
-                <p class="text-slate-500 text-sm leading-relaxed">
-                    负责前期市场调研与用户测试，确保项目能够真实解决校园导览的痛点。
-                </p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Reflection -->
-    <section id="reflection" class="py-32 bg-slate-50">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold mb-10" data-aos="fade-up">Reflection</h2>
-            <p class="text-xl text-slate-600 leading-relaxed italic" data-aos="fade-up" data-aos-delay="100">
-                "Developing the XR Campus Tour project highlighted the importance of integrating physical environments with digital interaction. Designing experiences that respond to real-world locations requires careful consideration of technical constraints and user experience."
-            </p>
-        </div>
-    </section>
-
-    <!-- Contact -->
-    <footer id="contact" class="py-24 border-t border-slate-100 text-center px-6">
-        <h2 class="text-4xl font-bold mb-12">Contact Me</h2>
-        <div class="flex flex-col md:flex-row justify-center items-center gap-8 text-slate-400 font-medium">
-            <a href="mailto:yourname@email.com" class="hover:text-slate-900 transition flex items-center gap-2">
-                <span class="text-xl">📧</span> yourname@email.com
-            </a>
-            <a href="https://github.com/yourusername" class="hover:text-slate-900 transition flex items-center gap-2">
-                <span class="text-xl">🔗</span> github.com/yourusername
-            </a>
-        </div>
-        <p class="mt-20 text-slate-300 text-sm italic">© 2026 XR Campus Tour Portfolio. Created for CPT208 Excellence.</p>
-    </footer>
+    </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 800, once: true });
-        window.onscroll = function() {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            let scrolled = (winScroll / height) * 100;
-            document.getElementById("progress-bar").style.width = scrolled + "%";
+        AOS.init({
+            duration: 850,
+            once: true,
+            offset: 40
+        });
+
+        const progressBar = document.getElementById("progress-bar");
+        const nav = document.getElementById("site-nav");
+        const sections = document.querySelectorAll("section[id], footer[id]");
+        const navLinks = document.querySelectorAll(".nav-link, .nav-pill");
+
+        const syncProgress = () => {
+            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            progressBar.style.width = scrolled + "%";
+            nav.classList.toggle("nav-compact", winScroll > 24);
         };
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    const id = entry.target.getAttribute("id");
+                    navLinks.forEach((link) => {
+                        const isMatch = link.getAttribute("href") === "#" + id;
+                        link.classList.toggle("is-active", isMatch);
+                    });
+                });
+            },
+            {
+                rootMargin: "-35% 0px -45% 0px",
+                threshold: 0.01
+            }
+        );
+
+        sections.forEach((section) => observer.observe(section));
+        window.addEventListener("scroll", syncProgress, { passive: true });
+        syncProgress();
     </script>
 </body>
 </html>
